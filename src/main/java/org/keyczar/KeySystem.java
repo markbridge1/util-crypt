@@ -53,11 +53,11 @@ import org.keyczar.interfaces.KeyczarReader;
  */
 public class KeySystem {
     
-    protected static final String privateDirectory = App.CONFIG.privateDirectory();
+    protected static String privateDirectory = App.CONFIG.privateDirectory();
     
-    public static final String symmetricEncryptedStoreDirectory = App.CONFIG.symmetricEncryptedStoreDirectory();
-    public static final String asymmetricEncryptedStoreDirectory = App.CONFIG.asymmetricEncryptedStoreDirectory();
-    public static final String asymmetricPublicPlaintextStoreDirectory = App.CONFIG.asymmetricPublicPlaintextStoreDirectory();
+    public static String symmetricEncryptedStoreDirectory = App.CONFIG.symmetricEncryptedStoreDirectory();
+    public static String asymmetricEncryptedStoreDirectory = App.CONFIG.asymmetricEncryptedStoreDirectory();
+    public static String asymmetricPublicPlaintextStoreDirectory = App.CONFIG.asymmetricPublicPlaintextStoreDirectory();
     
     private static KeySystem singleton;
     
@@ -90,6 +90,17 @@ public class KeySystem {
             
             this.updatePubKeyStore();
         }
+    }
+    
+    public synchronized static void reconfigure(String privateDirectory,
+            String symmetricEncryptedStoreDirectory,
+            String asymmetricEncryptedStoreDirectory,
+            String asymmetricPublicPlaintextStoreDirectory) {
+        
+        KeySystem.privateDirectory = privateDirectory;
+        KeySystem.symmetricEncryptedStoreDirectory = symmetricEncryptedStoreDirectory;
+        KeySystem.asymmetricEncryptedStoreDirectory = asymmetricEncryptedStoreDirectory;
+        KeySystem.asymmetricPublicPlaintextStoreDirectory = asymmetricPublicPlaintextStoreDirectory;
     }
     
     public synchronized static KeySystem getInstance() {
